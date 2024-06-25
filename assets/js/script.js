@@ -1,10 +1,9 @@
 $(document).ready(function() {
-    var apiKey = 'YOUR_API_KEY'; // Replace with your actual CheapShark API key
 
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
         var settings = {
-            "url": `https://www.cheapshark.com/api/1.0/deals?storeID=1&sortBy=Price&desc=0&pageSize=10&apiKey=${apiKey}`,
+            "url": `https://www.cheapshark.com/api/1.0/deals?storeID=1&sortBy=Price&desc=0&pageSize=10`,
             "method": "GET",
             "timeout": 0,
         };
