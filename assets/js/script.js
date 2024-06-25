@@ -138,6 +138,7 @@ $(document).ready(function() {
 
             var dealItem = `
                 <div class="deal-item">
+                    <img src=${deal.thumb} alt="Image Thumbnail">  
                     <div class="deal-title">${deal.title}</div>
                     <div class="store-name">Store: ${storeName}</div>
                     <div class="price">Price: $${deal.salePrice}</div>
