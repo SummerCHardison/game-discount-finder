@@ -82,11 +82,11 @@ $(document).ready(function() {
                 <div class="row deal-item">
                     <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     <div class="col s10"> 
-                    <div class="deal-title">${deal.title}</div>
-                    <div class="store-name">Store: ${storeName}</div>
-                    <div class="price">Price: $${deal.salePrice}</div>
-                    <div class="base-price">Price: $${deal.normalPrice}</div>
-                    <a href="https://store.steampowered.com/app/${deal.steamAppID}" class="steam-link"> Steam Link </a>
+                        <div class="deal-title">${deal.title}</div>
+                        <div class="store-name">Store: ${storeName}</div>
+                        <div class="price">Discount Price: $${deal.salePrice}</div>
+                        <div class="base-price">Base Price: $${deal.normalPrice}</div>
+                        <a href="https://store.steampowered.com/app/${deal.steamAppID}" class="steam-link"> Steam Link </a>
                     </div>
                 </div>
             `;
