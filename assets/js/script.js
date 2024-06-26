@@ -95,7 +95,7 @@ $(document).ready(function() {
             //added the base price
             //added the steam link
             var dealItem = `
-                <div class="row deal-item">
+                <div class="row deal-item valign-wrapper">
                     <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     <div class="col s10"> 
                         <div class="deal-title">${deal.title}</div>
