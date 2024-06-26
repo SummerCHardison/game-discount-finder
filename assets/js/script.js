@@ -5,12 +5,6 @@ $(document).ready(function() {
     $('.modal').modal();
     $('select').formSelect();
 
-
-    // Initialize SideNav
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {}); // Assuming no specific options are needed
-
-
     // Variable to store fetched deals data
     var dealsData;
 
@@ -269,16 +263,9 @@ $(document).ready(function() {
     }
 
 
-    // Event listener for applying filters
-    $('#applyFiltersBtn').on('click', function() {
-        fetchDeals(); // Fetch deals based on selected filters
-        $('#modal1').modal('close'); // Close modal after applying filters
-    });
-});
-
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
   });
-
+});
