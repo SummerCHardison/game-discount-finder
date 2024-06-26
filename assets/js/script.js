@@ -26,23 +26,40 @@ $(document).ready(function() {
         };
         
         //change the url if there are parameter
-        if(storeID){
-            //needs to be nested to avoid multiple '?'
-            if(searchTerm){
-                let searchTermJoined = searchTerm.replace(' ', '%20');
+        //needs to be nested to avoid multiple '?'
+        if(storeID){ //check if there is a store id
+            if(searchTerm){ //check for game title
+                let searchTermJoined = searchTerm.replace(' ', '%20'); //turn the title into a string seperated by %20 b/c that is how the api needs it
                 let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-                parameter = parameter + '&' + (storeID - 1);
-                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; 
+                parameter = parameter + '&' + (storeID - 1); //store id is 1 higher than store number for search
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; //change the url to reflect the parameters
             }
             else{
-                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + (storeID - 1);
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + (storeID - 1); //just add the store data
             }
         }
-        else if(searchTerm){
+        else if(searchTerm){ //just add the title
             let searchTermJoined = searchTerm.replace(' ', '%20');
             let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; 
+            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; 
         }
+
+
+        //local memory management
+        if (searchTerm){
+            //check if local memory exists
+            if(localStorage.getItem("gameList")){ //if yes, add to local memory
+                let gameList = JSON.parse(localStorage.getItem("gameList"))
+                gameList.push(searchTerm);
+                localStorage.setItem("gameList", JSON.stringify(gameList));
+            }
+            else{ //if no, create memory array
+                let gameList = [searchTerm];
+                localStorage.setItem("gameList", JSON.stringify(gameList));
+            }
+        }
+
+
 
         // Only include storeID if a specific store is selected
         if (storeID) {
@@ -67,22 +84,29 @@ $(document).ready(function() {
 
         // Filter deals based on search term
         var filteredDeals = deals.filter(function(deal) {
+            //i think this is pointless, but the filter may do something
             return deal; //.title.toLowerCase().includes(searchTerm)
         });
 
         filteredDeals.forEach(function(deal) {
             var storeName = getStoreName(deal.storeID); // Get store name from store ID
 
+            //store the deal item as an html literal
+            //added the base price
+            //added the steam link
             var dealItem = `
                 <div class="row deal-item valign-wrapper">
                     <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     <div class="col s10"> 
                         <div class="deal-title">${deal.title}</div>
                         <div class="store-name">Store: ${storeName}</div>
-                        <div class="price">Price: $${deal.salePrice}</div>
+                        <div class="price">Discount Price: $${deal.salePrice}</div>
+                        <div class="base-price">Base Price: $${deal.normalPrice}</div>
+                        <a href="https://store.steampowered.com/app/${deal.steamAppID}" class="steam-link"> Steam Link </a>
                     </div>
                 </div>
             `;
+            //add the new entry to the html
             dealListElement.append(dealItem);
         });
     }
