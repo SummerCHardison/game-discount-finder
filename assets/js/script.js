@@ -45,6 +45,22 @@ $(document).ready(function() {
         }
 
 
+        //local memory management
+        if (searchTerm){
+            //check if local memory exists
+            if(localStorage.getItem("gameList")){ //if yes, add to local memory
+                let gameList = JSON.parse(localStorage.getItem("gameList"))
+                gameList.push(searchTerm);
+                localStorage.setItem("gameList", JSON.stringify(gameList));
+            }
+            else{ //if no, create memory array
+                let gameList = [searchTerm];
+                localStorage.setItem("gameList", JSON.stringify(gameList));
+            }
+        }
+
+
+
         // Only include storeID if a specific store is selected
         if (storeID) {
             settings.data.storeID = storeID;
