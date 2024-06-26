@@ -21,6 +21,40 @@ $(document).ready(function() {
 
 
 
+
+    // Initialize Materialize components
+    $('.modal').modal();
+    $('select').formSelect();
+
+
+    // Initialize SideNav
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, {}); // Assuming no specific options are needed
+
+
+    // Variable to store fetched deals data
+    var dealsData;
+
+
+    //pull items from local memory if it exists
+    if(localStorage.getItem("gameList")){
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList){
+            const gameCard =
+            `<div>
+                <h3> ${game}<h3>
+            </div>`;
+            $('#dealList').append(gameCard);
+        }
+    }
+
+
+
+
+
+
+
+
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
         var sortValue = $('#sortSelect').val(); // Get selected sort option
@@ -39,7 +73,7 @@ $(document).ready(function() {
             },
             timeout: 0
         };
-        
+
         //change the url if there are parameter
         //needs to be nested to avoid multiple '?'
         if(storeID){ //check if there is a store id
@@ -59,7 +93,6 @@ $(document).ready(function() {
             settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; 
         }
 
-
         //local memory management
         if (searchTerm){
             //check if local memory exists
@@ -75,8 +108,6 @@ $(document).ready(function() {
                 localStorage.setItem("gameList", JSON.stringify(gameList));
             }
         }
-
-
 
         // Only include storeID if a specific store is selected
         if (storeID) {
@@ -94,10 +125,12 @@ $(document).ready(function() {
         });
     }
 
+
     // Function to display fetched deals on the webpage
     function displayDeals(deals, searchTerm = '') {
         var dealListElement = $('#dealList');
         dealListElement.empty(); // Clear previous deals
+
 
         // Filter deals based on search term
         var filteredDeals = deals.filter(function(deal) {
@@ -250,3 +283,10 @@ $(document).ready(function() {
         $('#modal1').modal('close'); // Close modal after applying filters
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
