@@ -85,3 +85,8 @@ h1 {
     color: #28a745;
     font-weight: bold;
 }
+
+img {
+    max-width: 30%;
+    max-height: 30%;
+}
