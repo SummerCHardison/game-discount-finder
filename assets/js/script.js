@@ -32,25 +32,6 @@ $(document).ready(function() {
     var instances = M.Sidenav.init(elems, {}); // Assuming no specific options are needed
 
 
-    // Variable to store fetched deals data
-    var dealsData;
-
-
-    //pull items from local memory if it exists
-    if(localStorage.getItem("gameList")){
-        const gameList = JSON.parse(localStorage.getItem("gameList"));
-        for (game of gameList){
-            const gameCard =
-            `<div>
-                <h3> ${game}<h3>
-            </div>`;
-            $('#dealList').append(gameCard);
-        }
-    }
-
-
-
-
 
 
 
