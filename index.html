@@ -9,6 +9,69 @@
 <body>
     <div class="container">
         <h1>CheapShark Game Deals</h1>
+        
+        <!-- Modal for sorting and searching -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Sort and Search</h2>
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="price_asc">Price Ascending</option>
+                    <option value="price_desc">Price Descending</option>
+                </select>
+                <br><br>
+                <label for="storeSelect">Filter by Store:</label>
+                <select id="storeSelect">
+                    <option value="">All Stores</option>
+                    <option value="1">Steam</option>
+                    <option value="2">GamersGate</option>
+                    <option value="3">GreenManGaming</option>
+                    <option value="4">Amazon</option>
+                    <option value="5">GameStop</option>
+                    <option value="6">Direct2Drive</option>
+                    <option value="7">GOG</option>
+                    <option value="8">Origin</option>
+                    <option value="9">GetGames</option>
+                    <option value="10">ShinyLoot</option>
+                    <option value="11">Humble Store</option>
+                    <option value="12">Desura</option>
+                    <option value="13">Uplay</option>
+                    <option value="14">IndieGameStand</option>
+                    <option value="15">Fanatical</option>
+                    <option value="16">GamesRocket</option>
+                    <option value="17">GamesRepublic</option>
+                    <option value="18">SilaGames</option>
+                    <option value="19">Playfield</option>
+                    <option value="20">ImperialGames</option>
+                    <option value="21">WinGameStore</option>
+                    <option value="22">FunStockDigital</option>
+                    <option value="23">GameBillet</option>
+                    <option value="24">Voidu</option>
+                    <option value="25">Epic Games Store</option>
+                    <option value="26">Razer Game Store</option>
+                    <option value="27">Gamesplanet</option>
+                    <option value="28">Gamesload</option>
+                    <option value="29">2Game</option>
+                    <option value="30">IndieGala Store</option>
+                    <option value="31">BlizzardShop</option>
+                    <option value="32">AllYouPlay</option>
+                    <option value="33">DlGamer</option>
+                    <option value="34">Noctre</option>
+                    <option value="35">DreamGame</option>
+
+                    
+                </select>
+                <br><br>
+                <label for="searchInput">Search by title:</label>
+                <input type="text" id="searchInput">
+                <br><br>
+                <button id="applyFiltersBtn">Apply</button>
+            </div>
+        </div>
+
+        <button id="openModalBtn">Open Modal</button>
+
         <div id="dealList" class="deal-list">
             <!-- Deals will be dynamically added here -->
         </div>
