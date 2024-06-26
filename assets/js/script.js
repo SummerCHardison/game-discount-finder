@@ -1,4 +1,25 @@
 $(document).ready(function() {
+    // Initialize Materialize components
+    $('.modal').modal();
+    $('select').formSelect();
+
+    // Variable to store fetched deals data
+    var dealsData;
+
+    //pull items from local memory if it exists
+    if(localStorage.getItem("gameList")){
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList){
+            const gameCard = 
+            `<div>
+                <h3> ${game}<h3>
+            </div>`; 
+            $('#dealList').append(gameCard);
+        }
+    }
+
+
+
 
 
     // Initialize Materialize components
@@ -42,7 +63,6 @@ $(document).ready(function() {
         var sortBy = 'price';
         var desc = sortValue === 'price_desc' ? 1 : 0;
 
-
         var settings = {
             url: 'https://www.cheapshark.com/api/1.0/deals',
             method: 'GET',
@@ -53,7 +73,7 @@ $(document).ready(function() {
             },
             timeout: 0
         };
-       
+
         //change the url if there are parameter
         //needs to be nested to avoid multiple '?'
         if(storeID){ //check if there is a store id
@@ -70,11 +90,8 @@ $(document).ready(function() {
         else if(searchTerm){ //just add the title
             let searchTermJoined = searchTerm.replace(' ', '%20');
             let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter;
+            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; 
         }
-
-
-
 
         //local memory management
         if (searchTerm){
@@ -91,11 +108,6 @@ $(document).ready(function() {
                 localStorage.setItem("gameList", JSON.stringify(gameList));
             }
         }
-
-
-
-
-
 
         // Only include storeID if a specific store is selected
         if (storeID) {
@@ -126,18 +138,16 @@ $(document).ready(function() {
             return deal; //.title.toLowerCase().includes(searchTerm)
         });
 
-
         filteredDeals.forEach(function(deal) {
             var storeName = getStoreName(deal.storeID); // Get store name from store ID
-
 
             //store the deal item as an html literal
             //added the base price
             //added the steam link
             var dealItem = `
                 <div class="row deal-item valign-wrapper">
-                    <img class="col s2" src=${deal.thumb} alt="Image Thumbnail">
-                    <div class="col s10">
+                    <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
+                    <div class="col s10"> 
                         <div class="deal-title">${deal.title}</div>
                         <div class="store-name">Store: ${storeName}</div>
                         <div class="price">Discount Price: $${deal.salePrice}</div>
@@ -150,7 +160,6 @@ $(document).ready(function() {
             dealListElement.append(dealItem);
         });
     }
-
 
     // Function to get store name from store ID
     function getStoreName(storeID) {
@@ -267,7 +276,6 @@ $(document).ready(function() {
         }
         return storeName; // Return the store name
     }
-
 
     // Event listener for applying filters
     $('#applyFiltersBtn').on('click', function() {

@@ -1,3 +1,33 @@
+/* Basic styles for the modal */
+
+.modal {
+    max-height: none; /* Remove the maximum height constraint */
+    height: auto; /* Set height to auto to fit the content */
+    top: auto; /* Remove top positioning */
+    bottom: auto; /* Remove bottom positioning */
+    transform: none; /* Remove the default transform property */
+    border-radius: 8px; /* Add some border radius to the modal */
+}
+
+.modal-content {
+    padding: 20px; /* Add some padding to the modal content for better appearance */
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 /* Basic styles for the container */
 body {
     font-family: Arial, sans-serif;
