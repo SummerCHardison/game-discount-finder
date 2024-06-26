@@ -85,6 +85,8 @@ $(document).ready(function() {
                     <div class="deal-title">${deal.title}</div>
                     <div class="store-name">Store: ${storeName}</div>
                     <div class="price">Price: $${deal.salePrice}</div>
+                    <div class="base-price">Price: $${deal.normalPrice}</div>
+                    <a href="https://store.steampowered.com/app/${deal.steamAppID}" class="steam-link"> Steam Link </a>
                     </div>
                 </div>
             `;
