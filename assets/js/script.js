@@ -32,13 +32,17 @@ $(document).ready(function() {
                 let searchTermJoined = searchTerm.replace(' ', '%20');
                 let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
                 parameter = parameter + '&' + (storeID - 1);
-                settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' +parameter; // /deals to /games
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; 
             }
             else{
-                settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' + (storeID - 1);
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + (storeID - 1);
             }
         }
-        //else if
+        else if(searchTerm){
+            let searchTermJoined = searchTerm.replace(' ', '%20');
+            let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
+            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; 
+        }
 
         // Only include storeID if a specific store is selected
         if (storeID) {
