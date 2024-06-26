@@ -26,15 +26,19 @@ $(document).ready(function() {
         };
         
         //change the url if there are parameter
-        // if(storeID){
-        //     //needs to be nested to avoid multiple '?'
-        //     if(searchTerm){
-        //         let searchTermJoined = searchTerm.replace(' ', '&');
-        //         let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-        //         parameter = parameter + '&' + (storeID - 1);
-        //         settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' +parameter;
-        //     }
-        // }
+        if(storeID){
+            //needs to be nested to avoid multiple '?'
+            if(searchTerm){
+                let searchTermJoined = searchTerm.replace(' ', '%20');
+                let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
+                parameter = parameter + '&' + (storeID - 1);
+                settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' +parameter; // /deals to /games
+            }
+            else{
+                settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' + (storeID - 1);
+            }
+        }
+        //else if
 
         // Only include storeID if a specific store is selected
         if (storeID) {
@@ -59,7 +63,7 @@ $(document).ready(function() {
 
         // Filter deals based on search term
         var filteredDeals = deals.filter(function(deal) {
-            return deal.title.toLowerCase().includes(searchTerm);
+            return deal; //.title.toLowerCase().includes(searchTerm)
         });
 
         filteredDeals.forEach(function(deal) {
