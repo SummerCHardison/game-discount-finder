@@ -7,7 +7,7 @@ $(document).ready(function() {
     function fetchDeals() {
         var sortValue = $('#sortSelect').val(); // Get selected sort option
         var storeID = $('#storeSelect').val(); // Get selected store ID
-        var searchTerm = $('#searchInput').val().trim().toLowerCase(); // Get search term
+        var searchTerm = $('#searchInput').val().trim().toLowerCase(); // Get search term, the title
         var sortBy = 'price';
         var desc = sortValue === 'price_desc' ? 1 : 0;
 
@@ -21,12 +21,23 @@ $(document).ready(function() {
             },
             timeout: 0
         };
+        
+        //change the url if there are parameter
+        // if(storeID){
+        //     //needs to be nested to avoid multiple '?'
+        //     if(searchTerm){
+        //         let searchTermJoined = searchTerm.replace(' ', '&');
+        //         let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
+        //         parameter = parameter + '&' + (storeID - 1);
+        //         settings.url = 'https://www.cheapshark.com/api/1.0/games' + '?' +parameter;
+        //     }
+        // }
 
         // Only include storeID if a specific store is selected
         if (storeID) {
             settings.data.storeID = storeID;
         }
-
+        console.log(settings);
         $.ajax(settings)
         .done(function(response) {
             console.log(response);
