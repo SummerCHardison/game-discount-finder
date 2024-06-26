@@ -80,7 +80,8 @@ h1 {
     font-weight: bold;
 }
 
-img {
-    max-width: 30%;
-    max-height: 30%;
+.deal-item img {
+    height: fit-content;
+    position: relative;
+    left: 0px;
 }
