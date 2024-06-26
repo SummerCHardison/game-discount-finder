@@ -6,6 +6,21 @@ $(document).ready(function() {
     // Variable to store fetched deals data
     var dealsData;
 
+    //pull items from local memory if it exists
+    if(localStorage.getItem("gameList")){
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList){
+            const gameCard = 
+            `<div>
+                <h3> ${game}<h3>
+            </div>`; 
+            $('#dealList').append(gameCard);
+        }
+    }
+
+
+
+
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
         var sortValue = $('#sortSelect').val(); // Get selected sort option
@@ -49,9 +64,11 @@ $(document).ready(function() {
         if (searchTerm){
             //check if local memory exists
             if(localStorage.getItem("gameList")){ //if yes, add to local memory
-                let gameList = JSON.parse(localStorage.getItem("gameList"))
-                gameList.push(searchTerm);
-                localStorage.setItem("gameList", JSON.stringify(gameList));
+                let gameList = JSON.parse(localStorage.getItem("gameList"));
+                if (!(gameList.includes(searchTerm))){ //check if the entry is in the array already
+                    gameList.push(searchTerm);
+                    localStorage.setItem("gameList", JSON.stringify(gameList));
+                }
             }
             else{ //if no, create memory array
                 let gameList = [searchTerm];
