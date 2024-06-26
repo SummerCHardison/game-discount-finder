@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    // Initialize Materialize components
+    $('.modal').modal();
+    $('select').formSelect();
 
     // Variable to store fetched deals data
     var dealsData;
@@ -178,36 +181,9 @@ $(document).ready(function() {
         return storeName; // Return the store name
     }
 
-    // Modal functionality
-    var modal = $('#myModal');
-    var openModalBtn = $('#openModalBtn');
-    var closeModalBtn = $('.close');
-    var applyFiltersBtn = $('#applyFiltersBtn');
-    var sortSelect = $('#sortSelect');
-    var storeSelect = $('#storeSelect');
-    var searchInput = $('#searchInput');
-
-    openModalBtn.on('click', function() {
-        modal.css('display', 'block');
-    });
-
-    closeModalBtn.on('click', function() {
-        modal.css('display', 'none');
-    });
-
-    window.onclick = function(event) {
-        if (event.target === modal[0]) {
-            modal.css('display', 'none');
-        }
-    };
-
     // Event listener for applying filters
-    applyFiltersBtn.on('click', function() {
+    $('#applyFiltersBtn').on('click', function() {
         fetchDeals(); // Fetch deals based on selected filters
-        modal.css('display', 'none'); // Close modal after applying filters
+        $('#modal1').modal('close'); // Close modal after applying filters
     });
-
-    // Call fetchDeals function when the page loads
-    fetchDeals();
-
 });
