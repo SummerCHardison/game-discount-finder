@@ -74,12 +74,12 @@ $(document).ready(function() {
             var storeName = getStoreName(deal.storeID); // Get store name from store ID
 
             var dealItem = `
-                <div class="row deal-item">
+                <div class="row deal-item valign-wrapper">
                     <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     <div class="col s10"> 
-                    <div class="deal-title">${deal.title}</div>
-                    <div class="store-name">Store: ${storeName}</div>
-                    <div class="price">Price: $${deal.salePrice}</div>
+                        <div class="deal-title">${deal.title}</div>
+                        <div class="store-name">Store: ${storeName}</div>
+                        <div class="price">Price: $${deal.salePrice}</div>
                     </div>
                 </div>
             `;
