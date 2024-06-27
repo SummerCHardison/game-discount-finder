@@ -18,10 +18,6 @@ $(document).ready(function() {
         }
     }
 
-
-
-
-
     // Initialize Materialize components
     $('.modal').modal();
     $('select').formSelect();
@@ -41,13 +37,6 @@ $(document).ready(function() {
             $('#dealList').append(gameCard);
         }
     }
-
-
-
-
-
-
-
 
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
