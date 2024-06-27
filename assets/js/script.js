@@ -26,10 +26,23 @@ $(document).ready(function() {
     $('.modal').modal();
     $('select').formSelect();
 
+    // Variable to store fetched deals data
+    var dealsData;
 
-    // Initialize SideNav
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {}); // Assuming no specific options are needed
+
+    //pull items from local memory if it exists
+    if(localStorage.getItem("gameList")){
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList){
+            const gameCard =
+            `<div>
+                <h3> ${game}<h3>
+            </div>`;
+            $('#dealList').append(gameCard);
+        }
+    }
+
+
 
 
 
@@ -258,6 +271,29 @@ $(document).ready(function() {
         return storeName; // Return the store name
     }
 
+    // Modal functionality
+    var modal = $('#myModal');
+    var openModalBtn = $('#openModalBtn');
+    var closeModalBtn = $('.close');
+    var applyFiltersBtn = $('#applyFiltersBtn');
+    var sortSelect = $('#sortSelect');
+    var storeSelect = $('#storeSelect');
+    var searchInput = $('#searchInput');
+
+    openModalBtn.on('click', function() {
+        modal.css('display', 'block');
+    });
+
+    closeModalBtn.on('click', function() {
+        modal.css('display', 'none');
+    });
+
+    window.onclick = function(event) {
+        if (event.target === modal[0]) {
+            modal.css('display', 'none');
+        }
+    };
+
     // Event listener for applying filters
     $('#applyFiltersBtn').on('click', function() {
         fetchDeals(); // Fetch deals based on selected filters
@@ -265,9 +301,4 @@ $(document).ready(function() {
     });
 });
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems);
-  });
 
