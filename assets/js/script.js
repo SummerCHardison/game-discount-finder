@@ -290,8 +290,6 @@ $(document).ready(function () {
         $('#modal1').modal('close'); // Close modal after applying filters
     });
 
-
-
     //the side bard free things
     function freeDeals() {
         
@@ -340,4 +338,68 @@ $(document).ready(function () {
 
 });
 
+    //the side bard free things
+    function freeDeals() {
+        // https://gamerpower.com/api
+        ///giveaways?sort-by={sort_name}
+        ///giveaways?type={type_name}
+        //to find free games sorted by value descending: https://www.gamerpower.com/api/giveaways?sort-by=value&type=game
+        //https://rapidapi.com/digiwalls/api/gamerpower/giveaways?sort-by=value&type=game
+        // const powerUrl = `https://www.gamerpower.com/api/giveaways`;
+        // fetch(powerUrl)
+        //     .then(function (response){
+        //         console.log(response);
+        //         return response.json();
+        //     })
+        //     .then(function (data){
+        //         console.log(data);
+        //     })
 
+        // var powerSettings = {
+        //     url: 'https://www.gamerpower.com/api/giveaways?sort-by=value&type=game',
+        //     method: 'GET',
+        //     data: {
+        //         // sortBy: sortBy, // Sort by price
+        //         // desc: desc, // Sort order
+        //         pageSize: 100 // Number of deals per page
+        //     },
+        //     timeout: 0
+        // };
+
+        // $.ajax(powerSettings)
+        // .done(function(response) {
+        //     console.log(response);
+        //     // dealsData = response; // Store fetched data in dealsData variable
+        //     // displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
+        // })
+        // .fail(function(xhr, status, error) {
+        //     console.error('Request failed:', status, error);
+        // });
+
+        const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '6d70cf00a3msh2af3f6a737a8eafp173c58jsn6abc269c9605',
+                'x-rapidapi-host': 'gamerpower.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = fetch(url, options).then( function(response){
+                console.log(response);
+                return response.json();
+                
+            })
+            .then(function (data){
+                console.log(data);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    freeDeals();
+
+});
