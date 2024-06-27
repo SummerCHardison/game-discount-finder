@@ -18,9 +18,6 @@ $(document).ready(function() {
         }
     }
 
-
-
-
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
         var sortValue = $('#sortSelect').val(); // Get selected sort option
