@@ -305,26 +305,24 @@ $(document).ready(function () {
                     for (item of data) {
                         //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
 
+                        //if block to make free items give a normal price
                         let price;
-                        if (price == "N/A"){
+                        if (item.worth == "N/A"){
                             price = "Free";
                         }
                         else{
-                            price = data.worth;
+                            price = item.worth;
                         }
 
                         const freeGame = `
-
-                    <li>
-                        <img src=${item.thumbnail} alt="Game Thumbnail">
-                        <p>${item.title} <p>
-                        <p>Normal Price: ${price}<p>
-                        <a href=${item.open_giveaway_url}> Link to game </a> 
-                    </li>
-                    `
-                    $('#slide-out').append(freeGame); //add freeGame to the sidebar
-
-
+                            <li>
+                                <img src=${item.thumbnail} alt="Game Thumbnail">
+                                <p>${item.title} <p>
+                                <p>Normal Price: ${price}<p>
+                                <a href=${item.open_giveaway_url}> Link to game </a> 
+                            </li>
+                            `
+                        $('#slide-out').append(freeGame); //add freeGame to the sidebar
                     }
                 })
         } catch (error) {
