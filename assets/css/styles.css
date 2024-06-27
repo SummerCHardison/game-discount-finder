@@ -1,31 +1,23 @@
 /* Basic styles for the modal */
 
 .modal {
-    max-height: none; /* Remove the maximum height constraint */
-    height: auto; /* Set height to auto to fit the content */
-    top: auto; /* Remove top positioning */
-    bottom: auto; /* Remove bottom positioning */
-    transform: none; /* Remove the default transform property */
-    border-radius: 8px; /* Add some border radius to the modal */
+    max-height: none;
+    /* Remove the maximum height constraint */
+    height: auto;
+    /* Set height to auto to fit the content */
+    top: auto;
+    /* Remove top positioning */
+    bottom: auto;
+    /* Remove bottom positioning */
+    transform: none;
+    /* Remove the default transform property */
+    border-radius: 8px;
+    /* Add some border radius to the modal */
 }
 
 .modal-content {
-    padding: 20px; /* Add some padding to the modal content for better appearance */
-}
-
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    padding: 20px;
+    /* Add some padding to the modal content for better appearance */
 }
 
 /* Basic styles for the container */
@@ -45,13 +37,52 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-  .sidebar {
-    width: 250px; /* Adjust based on your sidebar width */
-  }
-  
-  .main-content {
+.sidenav {
+    width: 275px;
+    /* Adjust based on your sidebar width */
+    overflow-y: scroll;
+    /* Allows vertical scrolling */
+    text-align: center;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.sidenav::-webkit-scrollbar {
+    display: none;
+}
+
+.sidenav li {
+    margin-bottom: 5px;
+    line-height: normal;
+    border-bottom: #aaa 2px solid;
+}
+
+.sidenav li a {
+    line-height: 1.2;
+
+}
+
+.sidenav li img {
+    width: 95%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+.navhead {
+    font-size: x-large;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.main-content {
     flex-grow: 1;
-  }
+}
 
 h1 {
     text-align: center;
@@ -88,16 +119,25 @@ h1 {
     font-weight: bold;
 }
 
+/* Screen Dependant Styles */
 @media screen and (max-width: 1440px) and (min-width: 1180px) {
     .container {
         position: absolute;
-        right : 5%;
+        right: 5%;
     }
-    
+
 }
+
 @media screen and (max-width: 1180px) {
     .sidenav {
         display: none;
     }
-    
+
+}
+
+@media screen and (min-width: 1180px) {
+    .sidenav {
+        width: 20%;
+    }
+
 }

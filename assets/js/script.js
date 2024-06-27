@@ -14,7 +14,7 @@ $(document).ready(function () {
             const gameCard =
                 `<div>
                 <h3> ${game}<h3>
-            </div>`;
+                 </div>`;
             $('#dealList').append(gameCard);
         }
     }
@@ -256,15 +256,15 @@ $(document).ready(function () {
     var storeSelect = $('#storeSelect');
     var searchInput = $('#searchInput');
 
-    openModalBtn.on('click', function() {
+    openModalBtn.on('click', function () {
         modal.css('display', 'block');
     });
 
-    closeModalBtn.on('click', function() {
+    closeModalBtn.on('click', function () {
         modal.css('display', 'none');
     });
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target === modal[0]) {
             modal.css('display', 'none');
         }
@@ -278,6 +278,7 @@ $(document).ready(function () {
 
     //the side bar free things
     function freeDeals() {
+
         
         //got the url from rapidapi
         const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
@@ -290,27 +291,22 @@ $(document).ready(function () {
         };
 
         try {
-            const response = fetch(url, options).then( function(response){ //the fetch
-                // console.log(response); 
+
+            const response = fetch(url, options).then(function (response) {
+                console.log(response);
+
                 return response.json();
-                
+
             })
-            .then(function (data){
-                // console.log(data);
-                //append to html id slide out, it is an unordered list
-                for (item of data){ //data is an array of objects, so I need to go through the array
-                    
-                    //if block to sort out how the price looks
-                    let price;
-                    if (item.worth == "N/A"){ //if free, don't say N/A
-                        price = "Free";
-                    }
-                    else{
-                        price = item.worth; //otherwise give the price
-                    }
 
+                .then(function (data) {
+                    console.log(data);
+                    //append to html id slide out it is an unordered list
+                    for (item of data) {
+                        //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
 
-                    const freeGame =`
+                        const freeGame = `
+
                     <li>
                         <img src=${item.thumbnail} alt="Game Thumbnail">
                         <p>${item.title} <p>
@@ -320,8 +316,9 @@ $(document).ready(function () {
                     `
                     $('#slide-out').append(freeGame); //add freeGame to the sidebar
 
-                }
-            })
+
+                    }
+                })
         } catch (error) {
             console.error(error);
         }
