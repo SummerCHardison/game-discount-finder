@@ -312,7 +312,23 @@ $(document).ready(function () {
                 
             })
             .then(function (data){
+                const listTarget = $('#slide-out');
                 console.log(data);
+                //append to html id slide out it is an unordered list
+                for (item of data){
+                    //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
+                    
+                    const freeGame =`
+                    <li>
+                        <img src=${item.thumbnail} alt="Game Thumbnail">
+                        <h4>${item.title} <h4>
+                        <p>Normal price: ${item.worth}<p>
+                        <a href=${item.open_giveaway_url}> Link to game </a>
+                    </li>
+                    `
+                    $('#slide-out').append(freeGame);
+
+                }
             })
         } catch (error) {
             console.error(error);
