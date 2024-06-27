@@ -1,4 +1,5 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
     // Initialize Materialize components
     $('.modal').modal();
     $('select').formSelect();
@@ -7,13 +8,13 @@ $(document).ready(function() {
     var dealsData;
 
     //pull items from local memory if it exists
-    if(localStorage.getItem("gameList")){
+    if (localStorage.getItem("gameList")) {
         const gameList = JSON.parse(localStorage.getItem("gameList"));
-        for (game of gameList){
-            const gameCard = 
-            `<div>
+        for (game of gameList) {
+            const gameCard =
+                `<div>
                 <h3> ${game}<h3>
-            </div>`; 
+            </div>`;
             $('#dealList').append(gameCard);
         }
     }
@@ -59,34 +60,34 @@ $(document).ready(function() {
 
         //change the url if there are parameter
         //needs to be nested to avoid multiple '?'
-        if(storeID){ //check if there is a store id
-            if(searchTerm){ //check for game title
+        if (storeID) { //check if there is a store id
+            if (searchTerm) { //check for game title
                 let searchTermJoined = searchTerm.replace(' ', '%20'); //turn the title into a string seperated by %20 b/c that is how the api needs it
                 let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
                 parameter = parameter + '&' + (storeID - 1); //store id is 1 higher than store number for search
-                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; //change the url to reflect the parameters
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; //change the url to reflect the parameters
             }
-            else{
+            else {
                 settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + (storeID - 1); //just add the store data
             }
         }
-        else if(searchTerm){ //just add the title
+        else if (searchTerm) { //just add the title
             let searchTermJoined = searchTerm.replace(' ', '%20');
             let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; 
+            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter;
         }
 
         //local memory management
-        if (searchTerm){
+        if (searchTerm) {
             //check if local memory exists
-            if(localStorage.getItem("gameList")){ //if yes, add to local memory
+            if (localStorage.getItem("gameList")) { //if yes, add to local memory
                 let gameList = JSON.parse(localStorage.getItem("gameList"));
-                if (!(gameList.includes(searchTerm))){ //check if the entry is in the array already
+                if (!(gameList.includes(searchTerm))) { //check if the entry is in the array already
                     gameList.push(searchTerm);
                     localStorage.setItem("gameList", JSON.stringify(gameList));
                 }
             }
-            else{ //if no, create memory array
+            else { //if no, create memory array
                 let gameList = [searchTerm];
                 localStorage.setItem("gameList", JSON.stringify(gameList));
             }
@@ -98,14 +99,14 @@ $(document).ready(function() {
         }
         console.log(settings);
         $.ajax(settings)
-        .done(function(response) {
-            console.log(response);
-            dealsData = response; // Store fetched data in dealsData variable
-            displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
-        })
-        .fail(function(xhr, status, error) {
-            console.error('Request failed:', status, error);
-        });
+            .done(function (response) {
+                console.log(response);
+                dealsData = response; // Store fetched data in dealsData variable
+                displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
+            })
+            .fail(function (xhr, status, error) {
+                console.error('Request failed:', status, error);
+            });
     }
 
 
@@ -116,12 +117,12 @@ $(document).ready(function() {
 
 
         // Filter deals based on search term
-        var filteredDeals = deals.filter(function(deal) {
+        var filteredDeals = deals.filter(function (deal) {
             //i think this is pointless, but the filter may do something
             return deal; //.title.toLowerCase().includes(searchTerm)
         });
 
-        filteredDeals.forEach(function(deal) {
+        filteredDeals.forEach(function (deal) {
             var storeName = getStoreName(deal.storeID); // Get store name from store ID
 
             //store the deal item as an html literal
@@ -284,10 +285,75 @@ $(document).ready(function() {
     };
 
     // Event listener for applying filters
-    $('#applyFiltersBtn').on('click', function() {
+    $('#applyFiltersBtn').on('click', function () {
         fetchDeals(); // Fetch deals based on selected filters
         $('#modal1').modal('close'); // Close modal after applying filters
     });
+
+
+
+    //the side bard free things
+    function freeDeals() {
+        // https://gamerpower.com/api
+        ///giveaways?sort-by={sort_name}
+        ///giveaways?type={type_name}
+        //to find free games sorted by value descending: https://www.gamerpower.com/api/giveaways?sort-by=value&type=game
+        //https://rapidapi.com/digiwalls/api/gamerpower/giveaways?sort-by=value&type=game
+        // const powerUrl = `https://www.gamerpower.com/api/giveaways`;
+        // fetch(powerUrl)
+        //     .then(function (response){
+        //         console.log(response);
+        //         return response.json();
+        //     })
+        //     .then(function (data){
+        //         console.log(data);
+        //     })
+
+        // var powerSettings = {
+        //     url: 'https://www.gamerpower.com/api/giveaways?sort-by=value&type=game',
+        //     method: 'GET',
+        //     data: {
+        //         // sortBy: sortBy, // Sort by price
+        //         // desc: desc, // Sort order
+        //         pageSize: 100 // Number of deals per page
+        //     },
+        //     timeout: 0
+        // };
+
+        // $.ajax(powerSettings)
+        // .done(function(response) {
+        //     console.log(response);
+        //     // dealsData = response; // Store fetched data in dealsData variable
+        //     // displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
+        // })
+        // .fail(function(xhr, status, error) {
+        //     console.error('Request failed:', status, error);
+        // });
+
+        const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '6d70cf00a3msh2af3f6a737a8eafp173c58jsn6abc269c9605',
+                'x-rapidapi-host': 'gamerpower.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = fetch(url, options).then( function(response){
+                console.log(response);
+                return response.json();
+                
+            })
+            .then(function (data){
+                console.log(data);
+            })
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    freeDeals();
+
 });
-
-
