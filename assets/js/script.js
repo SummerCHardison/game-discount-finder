@@ -1,10 +1,24 @@
-$(document).ready(function() {
+$(document).ready(function () {
+
     // Initialize Materialize components
     $('.modal').modal();
     $('select').formSelect();
 
     // Variable to store fetched deals data
     var dealsData;
+
+    //pull items from local memory if it exists
+    if (localStorage.getItem("gameList")) {
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList) { //go through the list and add the titles to the html
+            const gameCard =
+                `<div>
+                <h3> ${game}<h3>
+                 </div>`;
+            $('#dealList').append(gameCard);
+        }
+    }
+
 
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
@@ -24,36 +38,39 @@ $(document).ready(function() {
             },
             timeout: 0
         };
-        
+
         //change the url if there are parameter
         //needs to be nested to avoid multiple '?'
-        if(storeID){ //check if there is a store id
-            if(searchTerm){ //check for game title
+        if (storeID) { //check if there is a store id
+            if (searchTerm) { //check for game title
                 let searchTermJoined = searchTerm.replace(' ', '%20'); //turn the title into a string seperated by %20 b/c that is how the api needs it
                 let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
                 parameter = parameter + '&' + (storeID - 1); //store id is 1 higher than store number for search
-                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' +parameter; //change the url to reflect the parameters
+                settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; //change the url to reflect the parameters
             }
-            else{
+            else {
                 settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + (storeID - 1); //just add the store data
             }
         }
-        else if(searchTerm){ //just add the title
+        else if (searchTerm) { //just add the title
             let searchTermJoined = searchTerm.replace(' ', '%20');
             let parameter = 'title=' + searchTermJoined; //make a string to hold the parameter
-            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter; 
+            settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter;
         }
 
 
+
         //local memory management
-        if (searchTerm){
+        if (searchTerm) {
             //check if local memory exists
-            if(localStorage.getItem("gameList")){ //if yes, add to local memory
-                let gameList = JSON.parse(localStorage.getItem("gameList"))
-                gameList.push(searchTerm);
-                localStorage.setItem("gameList", JSON.stringify(gameList));
+            if (localStorage.getItem("gameList")) { //if yes, add to local memory
+                let gameList = JSON.parse(localStorage.getItem("gameList"));
+                if (!(gameList.includes(searchTerm))) { //check if the entry is in the array already
+                    gameList.push(searchTerm);
+                    localStorage.setItem("gameList", JSON.stringify(gameList));
+                }
             }
-            else{ //if no, create memory array
+            else { //if no, create memory array
                 let gameList = [searchTerm];
                 localStorage.setItem("gameList", JSON.stringify(gameList));
             }
@@ -67,35 +84,38 @@ $(document).ready(function() {
         }
         console.log(settings);
         $.ajax(settings)
-        .done(function(response) {
-            console.log(response);
-            dealsData = response; // Store fetched data in dealsData variable
-            displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
-        })
-        .fail(function(xhr, status, error) {
-            console.error('Request failed:', status, error);
-        });
+            .done(function (response) {
+                console.log(response);
+                dealsData = response; // Store fetched data in dealsData variable
+                displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
+            })
+            .fail(function (xhr, status, error) {
+                console.error('Request failed:', status, error);
+            });
     }
+
+
 
     // Function to display fetched deals on the webpage
     function displayDeals(deals, searchTerm = '') {
         var dealListElement = $('#dealList');
         dealListElement.empty(); // Clear previous deals
 
+
         // Filter deals based on search term
-        var filteredDeals = deals.filter(function(deal) {
+        var filteredDeals = deals.filter(function (deal) {
             //i think this is pointless, but the filter may do something
             return deal; //.title.toLowerCase().includes(searchTerm)
         });
 
-        filteredDeals.forEach(function(deal) {
+        filteredDeals.forEach(function (deal) {
             var storeName = getStoreName(deal.storeID); // Get store name from store ID
 
             //store the deal item as an html literal
             //added the base price
             //added the steam link
             var dealItem = `
-                <div class="row deal-item">
+                <div class="row deal-item valign-wrapper">
                     <img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     <div class="col s10"> 
                         <div class="deal-title">${deal.title}</div>
@@ -225,11 +245,90 @@ $(document).ready(function() {
                 break;
         }
         return storeName; // Return the store name
-    }
+    }//end of store name function
+
+    // Modal functionality
+    var modal = $('#myModal');
+    var openModalBtn = $('#openModalBtn');
+    var closeModalBtn = $('.close');
+    var applyFiltersBtn = $('#applyFiltersBtn');
+    var sortSelect = $('#sortSelect');
+    var storeSelect = $('#storeSelect');
+    var searchInput = $('#searchInput');
+
+    openModalBtn.on('click', function () {
+        modal.css('display', 'block');
+    });
+
+    closeModalBtn.on('click', function () {
+        modal.css('display', 'none');
+    });
+
+    window.onclick = function (event) {
+        if (event.target === modal[0]) {
+            modal.css('display', 'none');
+        }
+    };
 
     // Event listener for applying filters
-    $('#applyFiltersBtn').on('click', function() {
+    $('#applyFiltersBtn').on('click', function () {
         fetchDeals(); // Fetch deals based on selected filters
         $('#modal1').modal('close'); // Close modal after applying filters
     });
+
+    //the side bar free things
+    function freeDeals() {
+
+        
+        //got the url from rapidapi
+        const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '6d70cf00a3msh2af3f6a737a8eafp173c58jsn6abc269c9605',
+                'x-rapidapi-host': 'gamerpower.p.rapidapi.com'
+            }
+        };
+
+        try {
+
+            const response = fetch(url, options).then(function (response) {
+                console.log(response);
+
+                return response.json();
+
+            })
+
+                .then(function (data) {
+                    console.log(data);
+                    //append to html id slide out it is an unordered list
+                    for (item of data) {
+                        //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
+
+                        const freeGame = `
+
+                    <li>
+                        <img src=${item.thumbnail} alt="Game Thumbnail">
+                        <p>${item.title} <p>
+                        <p>Normal Price: ${price}<p>
+                        <a href=${item.open_giveaway_url}> Link to game </a> 
+                    </li>
+                    `
+                    $('#slide-out').append(freeGame); //add freeGame to the sidebar
+
+
+                    }
+                })
+        } catch (error) {
+            console.error(error);
+        }
+
+    } //end of freeDeals
+
+    freeDeals(); //turn on the free deals function
+
 });
+
+
+
+
