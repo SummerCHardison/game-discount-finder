@@ -319,7 +319,7 @@ $(document).ready(function () {
                     const freeGame =`
                     <li>
                         <img src=${item.thumbnail} alt="Game Thumbnail">
-                        <h4>${item.title} <h4>
+                        <p>${item.title} <p>
                         <p>Normal price: ${item.worth}<p>
                         <a href=${item.open_giveaway_url}> Link to game </a>
                     </li>
