@@ -19,23 +19,25 @@ $(document).ready(function () {
         }
     }
 
-
-
-
-
     // Initialize Materialize components
     $('.modal').modal();
     $('select').formSelect();
 
-
-    // Initialize SideNav
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {}); // Assuming no specific options are needed
+    // Variable to store fetched deals data
+    var dealsData;
 
 
-
-
-
+    //pull items from local memory if it exists
+    if(localStorage.getItem("gameList")){
+        const gameList = JSON.parse(localStorage.getItem("gameList"));
+        for (game of gameList){
+            const gameCard =
+            `<div>
+                <h3> ${game}<h3>
+            </div>`;
+            $('#dealList').append(gameCard);
+        }
+    }
 
     // Function to fetch deals from CheapShark API
     function fetchDeals() {
@@ -259,6 +261,29 @@ $(document).ready(function () {
         return storeName; // Return the store name
     }
 
+    // Modal functionality
+    var modal = $('#myModal');
+    var openModalBtn = $('#openModalBtn');
+    var closeModalBtn = $('.close');
+    var applyFiltersBtn = $('#applyFiltersBtn');
+    var sortSelect = $('#sortSelect');
+    var storeSelect = $('#storeSelect');
+    var searchInput = $('#searchInput');
+
+    openModalBtn.on('click', function() {
+        modal.css('display', 'block');
+    });
+
+    closeModalBtn.on('click', function() {
+        modal.css('display', 'none');
+    });
+
+    window.onclick = function(event) {
+        if (event.target === modal[0]) {
+            modal.css('display', 'none');
+        }
+    };
+
     // Event listener for applying filters
     $('#applyFiltersBtn').on('click', function () {
         fetchDeals(); // Fetch deals based on selected filters
@@ -269,41 +294,7 @@ $(document).ready(function () {
 
     //the side bard free things
     function freeDeals() {
-        // https://gamerpower.com/api
-        ///giveaways?sort-by={sort_name}
-        ///giveaways?type={type_name}
-        //to find free games sorted by value descending: https://www.gamerpower.com/api/giveaways?sort-by=value&type=game
-        //https://rapidapi.com/digiwalls/api/gamerpower/giveaways?sort-by=value&type=game
-        // const powerUrl = `https://www.gamerpower.com/api/giveaways`;
-        // fetch(powerUrl)
-        //     .then(function (response){
-        //         console.log(response);
-        //         return response.json();
-        //     })
-        //     .then(function (data){
-        //         console.log(data);
-        //     })
-
-        // var powerSettings = {
-        //     url: 'https://www.gamerpower.com/api/giveaways?sort-by=value&type=game',
-        //     method: 'GET',
-        //     data: {
-        //         // sortBy: sortBy, // Sort by price
-        //         // desc: desc, // Sort order
-        //         pageSize: 100 // Number of deals per page
-        //     },
-        //     timeout: 0
-        // };
-
-        // $.ajax(powerSettings)
-        // .done(function(response) {
-        //     console.log(response);
-        //     // dealsData = response; // Store fetched data in dealsData variable
-        //     // displayDeals(dealsData, searchTerm); // Pass search term to displayDeals function
-        // })
-        // .fail(function(xhr, status, error) {
-        //     console.error('Request failed:', status, error);
-        // });
+        
 
         const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
         const options = {
@@ -333,9 +324,4 @@ $(document).ready(function () {
 
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems);
-});
 
