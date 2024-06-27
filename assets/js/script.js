@@ -305,6 +305,14 @@ $(document).ready(function () {
                     for (item of data) {
                         //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
 
+                        let price;
+                        if (price == "N/A"){
+                            price = "Free";
+                        }
+                        else{
+                            price = data.worth;
+                        }
+
                         const freeGame = `
 
                     <li>
