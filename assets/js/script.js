@@ -296,11 +296,20 @@ $(document).ready(function () {
                 for (item of data){
                     //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
                     
+                    let price;
+                    if (item.worth == "N/A"){
+                        price = "Free";
+                    }
+                    else{
+                        price = item.worth;
+                    }
+
+
                     const freeGame =`
                     <li>
                         <img src=${item.thumbnail} alt="Game Thumbnail">
                         <p>${item.title} <p>
-                        <p>Normal price: ${item.worth}<p>
+                        <p>Normal Price: ${price}<p>
                         <a href=${item.open_giveaway_url}> Link to game </a>
                     </li>
                     `
