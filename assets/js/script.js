@@ -10,7 +10,7 @@ $(document).ready(function () {
     //pull items from local memory if it exists
     if (localStorage.getItem("gameList")) {
         const gameList = JSON.parse(localStorage.getItem("gameList"));
-        for (game of gameList) {
+        for (game of gameList) { //go through the list and add the titles to the html
             const gameCard =
                 `<div>
                 <h3> ${game}<h3>
@@ -58,6 +58,8 @@ $(document).ready(function () {
             settings.url = 'https://www.cheapshark.com/api/1.0/deals' + '?' + parameter;
         }
 
+
+
         //local memory management
         if (searchTerm) {
             //check if local memory exists
@@ -74,6 +76,8 @@ $(document).ready(function () {
             }
         }
 
+
+
         // Only include storeID if a specific store is selected
         if (storeID) {
             settings.data.storeID = storeID;
@@ -89,6 +93,7 @@ $(document).ready(function () {
                 console.error('Request failed:', status, error);
             });
     }
+
 
 
     // Function to display fetched deals on the webpage
@@ -240,7 +245,7 @@ $(document).ready(function () {
                 break;
         }
         return storeName; // Return the store name
-    }
+    }//end of store name function
 
     // Modal functionality
     var modal = $('#myModal');
@@ -274,7 +279,8 @@ $(document).ready(function () {
     //the side bar free things
     function freeDeals() {
 
-
+        
+        //got the url from rapidapi
         const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
         const options = {
             method: 'GET',
@@ -285,11 +291,14 @@ $(document).ready(function () {
         };
 
         try {
+
             const response = fetch(url, options).then(function (response) {
                 console.log(response);
+
                 return response.json();
 
             })
+
                 .then(function (data) {
                     console.log(data);
                     //append to html id slide out it is an unordered list
@@ -297,14 +306,16 @@ $(document).ready(function () {
                         //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
 
                         const freeGame = `
+
                     <li>
                         <img src=${item.thumbnail} alt="Game Thumbnail">
                         <p>${item.title} <p>
-                        <p>Normal price: ${item.worth}<p>
-                        <a href=${item.open_giveaway_url}> Link to game </a>
+                        <p>Normal Price: ${price}<p>
+                        <a href=${item.open_giveaway_url}> Link to game </a> 
                     </li>
                     `
-                        $('#slide-out').append(freeGame);
+                    $('#slide-out').append(freeGame); //add freeGame to the sidebar
+
 
                     }
                 })
@@ -312,9 +323,9 @@ $(document).ready(function () {
             console.error(error);
         }
 
-    }
+    } //end of freeDeals
 
-    freeDeals();
+    freeDeals(); //turn on the free deals function
 
 });
 
