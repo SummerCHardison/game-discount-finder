@@ -290,7 +290,53 @@ $(document).ready(function () {
         $('#modal1').modal('close'); // Close modal after applying filters
     });
 
+    //the side bard free things
+    function freeDeals() {
+        
 
+        const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '6d70cf00a3msh2af3f6a737a8eafp173c58jsn6abc269c9605',
+                'x-rapidapi-host': 'gamerpower.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = fetch(url, options).then( function(response){
+                console.log(response);
+                return response.json();
+                
+            })
+            .then(function (data){
+                const listTarget = $('#slide-out');
+                console.log(data);
+                //append to html id slide out it is an unordered list
+                for (item of data){
+                    //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
+                    
+                    const freeGame =`
+                    <li>
+                        <img src=${item.thumbnail} alt="Game Thumbnail">
+                        <h4>${item.title} <h4>
+                        <p>Normal price: ${item.worth}<p>
+                        <a href=${item.open_giveaway_url}> Link to game </a>
+                    </li>
+                    `
+                    $('#slide-out').append(freeGame);
+
+                }
+            })
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    freeDeals();
+
+});
 
     //the side bard free things
     function freeDeals() {
