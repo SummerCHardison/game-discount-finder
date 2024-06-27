@@ -14,7 +14,7 @@ $(document).ready(function () {
             const gameCard =
                 `<div>
                 <h3> ${game}<h3>
-            </div>`;
+                 </div>`;
             $('#dealList').append(gameCard);
         }
     }
@@ -251,15 +251,15 @@ $(document).ready(function () {
     var storeSelect = $('#storeSelect');
     var searchInput = $('#searchInput');
 
-    openModalBtn.on('click', function() {
+    openModalBtn.on('click', function () {
         modal.css('display', 'block');
     });
 
-    closeModalBtn.on('click', function() {
+    closeModalBtn.on('click', function () {
         modal.css('display', 'none');
     });
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target === modal[0]) {
             modal.css('display', 'none');
         }
@@ -273,7 +273,7 @@ $(document).ready(function () {
 
     //the side bar free things
     function freeDeals() {
-        
+
 
         const url = 'https://gamerpower.p.rapidapi.com/api/filter?&type=game';
         const options = {
@@ -285,18 +285,18 @@ $(document).ready(function () {
         };
 
         try {
-            const response = fetch(url, options).then( function(response){
+            const response = fetch(url, options).then(function (response) {
                 console.log(response);
                 return response.json();
-                
+
             })
-            .then(function (data){
-                console.log(data);
-                //append to html id slide out it is an unordered list
-                for (item of data){
-                    //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
-                    
-                    const freeGame =`
+                .then(function (data) {
+                    console.log(data);
+                    //append to html id slide out it is an unordered list
+                    for (item of data) {
+                        //img class="col s2" src=${deal.thumb} alt="Image Thumbnail"> 
+
+                        const freeGame = `
                     <li>
                         <img src=${item.thumbnail} alt="Game Thumbnail">
                         <p>${item.title} <p>
@@ -304,10 +304,10 @@ $(document).ready(function () {
                         <a href=${item.open_giveaway_url}> Link to game </a>
                     </li>
                     `
-                    $('#slide-out').append(freeGame);
+                        $('#slide-out').append(freeGame);
 
-                }
-            })
+                    }
+                })
         } catch (error) {
             console.error(error);
         }
