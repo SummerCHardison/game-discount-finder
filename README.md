@@ -18,4 +18,4 @@ Cameron Gillum
 
 Eric Wong
 
-Thank you to our peers at UNCC, and to the developers of the afformentioned APIs and CSS framework, wihtout you our development journeys would be a lot harder.
+Thank you to our peers at UNCC, and to the developers of the afformentioned APIs and CSS framework, without you our development journeys would be a lot harder.
